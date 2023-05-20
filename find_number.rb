@@ -6,20 +6,17 @@ class FindNumber
   def initialize(number_goal:, first_number:)
     @number_goal = number_goal
     @first_number = first_number
-    @tries=[]
+    @tries= {}
   end
 
   def find
     previous_try = @first_number
     try = previous_try/2
-    diff = previous_try-try
     iteration = 0
 
     until is_goal?(try) do
       diff = diff(previous_try,try)
-      # p "diff = #{diff}"
       previous_try = try
-      # p "previous_try = #{previous_try}"
       iteration += 1
 
       break if iteration == MAXIMAL_ITERATION
@@ -29,12 +26,10 @@ class FindNumber
       else
         try = try - diff
       end
-
-      # p "try = #{try}"
-      @tries << {iteration:, try:, diff:}
-      
+      @tries[iteration:] = {iteration:, try:, diff:}
     end
 
+    @tries[:number_of_tries] = @tries.count
     @tries
 
   end
@@ -54,9 +49,10 @@ class FindNumber
   end
 end
 
+#### Call
+
 number_goal = 88
 first_number = 100
-
 
 FindNumber
   .new(number_goal:, first_number:)

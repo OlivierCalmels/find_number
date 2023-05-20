@@ -1,11 +1,27 @@
 require_relative 'test_helper'   # require test_helper first
-require 'mutant/minitest/coverage'
+# require 'mutant/minitest/coverage'
 
-require File.join(File.dirname(__FILE__), '../gilded_rose')
+require File.join(File.dirname(__FILE__), '../find_number')
 
 # Run all tests with the command "rake test"
 class FindNumberTest < Minitest::Test
   cover 'FindNumber'
+
+  def test_diff
+    assert_diff(5, 30, 20)
+    assert_diff(5, 20, 30)
+    assert_diff(1, 4, 5)
+    assert_diff(1, 3, 5)
+  end
+
+
+
+  def assert_diff(expected, previous_try, try )
+    diff = FindNumber.new(number_goal:1, first_number:1).diff(previous_try, try)
+    assert_equal(expected, diff)
+  end
+
+
   # def test_foo
   #   items = [Item.new('foo', 0, 0)]
   #   GildedRose.new(items).update_quality
